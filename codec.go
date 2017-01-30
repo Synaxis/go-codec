@@ -7,7 +7,7 @@ import (
 	"unicode/utf8"
 )
 
-func Reverse(s string) string {
+func reverse(s string) string {
     r := []rune(s)
     for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
         r[i], r[j] = r[j], r[i]
@@ -15,7 +15,7 @@ func Reverse(s string) string {
     return string(r)
 }
 
-func encode(alphabet string) (func(uint64) string, error) {
+func Encode(alphabet string) (func(uint64) string, error) {
 	if alphabet == "" || utf8.RuneCountInString(alphabet) == 0 {
 		return nil, errors.New("encode: alphabet cannot be empty")
 	}
@@ -37,11 +37,11 @@ func encode(alphabet string) (func(uint64) string, error) {
 			buffer.WriteRune(m[r])
 		}
 
-		return Reverse(buffer.String())
+		return reverse(buffer.String())
 	}, nil
 }
 
-func decode(alphabet string) (func(string) (uint64, error), error) {
+func Decode(alphabet string) (func(string) (uint64, error), error) {
 	if alphabet == "" || utf8.RuneCountInString(alphabet) == 0 {
 		return nil, errors.New("decode: alphabet cannot be empty")
 	}
